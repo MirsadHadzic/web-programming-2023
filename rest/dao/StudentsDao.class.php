@@ -12,7 +12,7 @@ class StudentsDao{
         try {
           $servername = "localhost";
           $username = "root";
-          $password = "80sarajevo";
+          $password = "root";
           $schema = "web-project-2";
           $this->conn = new PDO("mysql:host=$servername;dbname=$schema", $username, $password);
           // set the PDO error mode to exception
