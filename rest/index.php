@@ -3,11 +3,19 @@
 // ove dvije tacke su za Exit, da hocemo iz dao izaci, napravili bismo ovo, ../../vendor/autoload.php
 
 require "../vendor/autoload.php";
-require "dao/StudentsDao.class.php";
+// require "dao/StudentsDao.class.php";
+// require "dao/CoursesDao.class.php";
+
+require "services/StudentService.php";
+require "services/CourseService.php";
 
 // flight register se koristi da ne bi ponavljali ovu instancu klase StudentsDaoClass... 
-Flight::register('student_dao', "StudentsDao");
+Flight::register('student_service', "StudentService");
+Flight::register('course_service', "CourseService");
 
+require_once('routes/StudentRoutes.php');
+require_once('routes/CourseRoutes.php');
+/*
 Flight::route("/", function(){
    echo "Hello from / route";
 });
@@ -24,7 +32,7 @@ Flight::route("GET /students", function(){
    // dodati u header-u postman  content type application/json
    Flight::json(Flight::student_dao()->get_all());
    /*$memory_usage = memory_get_usage(); // get current memory usage
-   echo "Current memory usage: " . $memory_usage . " bytes";*/
+   echo "Current memory usage: " . $memory_usage . " bytes";
 });
 
 Flight::route("GET /student_by_id", function(){
@@ -73,7 +81,7 @@ Flight::route("GET /students/@name", function($name){
 
 Flight::route("GET /students/@name/@status", function($name, $status){
    echo "Hello from /students route with name = " . $name . " and status = " . $status;
-});
+});*/
 
 // ide uvijek, da bi se startalo uopste
 Flight::start();
