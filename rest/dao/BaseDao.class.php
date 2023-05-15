@@ -39,7 +39,8 @@ require_once __DIR__."/../Config.class.php";
     public function get_by_id($id){
         $stmt = $this->conn->prepare("SELECT * FROM " . $this->table_name . " WHERE id=:id");
         $stmt->execute(['id' => $id]);
-        return $stmt->fetchAll();
+        // stavio fetch, bilo fetchAll
+        return $stmt->fetch();
     }
 
     /**

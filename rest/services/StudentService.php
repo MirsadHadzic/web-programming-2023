@@ -9,7 +9,20 @@ class StudentService extends BaseService
         parent::__construct(new StudentsDao);
     }
 
+    public function update($student, $id){
+        $student['password'] = md5($student['password']);
+        // if this is null or undefined go to 2nd return
+        // ako postoji i nije null onda ide prvi return
+        if(isset($student['id_column'])  && !is_null($student['id_column'])){
+            return parent::update($student, $id, $student['id_column']);
+        }
+        return parent::update($student, $id);
+    }
+
     public function add($entity){
+        // instead of passing all data from entity we can remove this phone column
+        unset($entity['phone']);
+        $entity['password'] = md5($entity['password']);
         return parent::add($entity);
         // send an email
         /*if (!validateField($entity['first_name'])){

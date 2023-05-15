@@ -21,6 +21,7 @@
         <div class="modal-body">
           <div class="form-group">
             <label for="first_name">First Name:</label>
+                 <!-- jquery validation is "required" -->
             <input
               type="text"
               id="first_name"
@@ -40,7 +41,12 @@
           </div>
           <div>
             <label for="email">Email:</label>
-            <input type="email" id="email" name="email" class="form-control" />
+            <input  onChange = "checkEmail()" 
+                    type="email" 
+                    id="email" 
+                    name="email" 
+                    class="form-control" 
+            /> 
           </div>
           <div>
             <label for="password">Password:</label>
@@ -116,6 +122,7 @@
   <div class="modal-dialog">
     <!-- Modal content-->
     <div class="modal-content" id="editStudentModal">
+        <!-- dodan bootstrap spinner -->
       <div class="spinner-border" id="editModalSpinner" role="status">
         <span class="sr-only">Loading...</span>
       </div>
@@ -209,6 +216,7 @@
           data[i].last_name +
           "</td>" +
           "<td>" +
+            // ovo ispod if user has email
           (data[i].email ? data[i].email : "No data") +
           "</td>" +
           "<td>" +
@@ -268,6 +276,7 @@
       $("#edit_email").val(data.email);
       $("#edit_password").val(data.password);
       $("#edit_student_id").val(data.id);
+      // $(".modal-content").html("Loading...");
       $("#editModalSpinner").hide();
       $("#editStudentForm").show();
     });
@@ -301,6 +310,7 @@
     });
   }
 
+  // validate if the email is written correctly
   jQuery.validator.addMethod(
     "email",
     function (value, element) {
@@ -341,17 +351,19 @@
     errorLabelContainer: "#messageBox1 ul",
     wrapper: "li",
     submitHandler: function (form, validator) {
+        // ajax call
       $.post("rest/student", $("#addStudentForm").serialize())
         .done(function () {
           toastr.success("Student added");
           $("#addStudentModal").modal("toggle");
           getStudents();
-          form.reset();
+          form.reset();  // Reset all form data
         })
         .fail(function () {
           toastr.error("Student not added");
         });
     },
+    // if data is not entered correctly
     invalidHandler: function (event, validator) {
       var errors = validator.numberOfInvalids();
       toastr.error("Error");
