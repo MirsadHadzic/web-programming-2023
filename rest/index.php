@@ -13,7 +13,7 @@ require "dao/UserDao.php";
 // flight register se koristi da ne bi ponavljali ovu instancu klase StudentsDaoClass... 
 Flight::register('student_service', "StudentService");
 Flight::register('course_service', "CourseService");
-Flight::register('user_dao', "UserDao");
+Flight::register('userDao', "UserDao");
 
 require_once('routes/StudentRoutes.php');
 require_once('routes/CourseRoutes.php');

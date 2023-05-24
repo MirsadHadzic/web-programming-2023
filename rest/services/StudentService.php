@@ -9,7 +9,7 @@ class StudentService extends BaseService
         parent::__construct(new StudentsDao);
     }
 
-    public function update($student, $id){
+    public function update($student, $id, $id_column = 'id'){
         $student['password'] = md5($student['password']);
         // if this is null or undefined go to 2nd return
         // ako postoji i nije null onda ide prvi return
