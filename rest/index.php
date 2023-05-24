@@ -8,13 +8,16 @@ require "../vendor/autoload.php";
 
 require "services/StudentService.php";
 require "services/CourseService.php";
+require "dao/UserDao.php";
 
 // flight register se koristi da ne bi ponavljali ovu instancu klase StudentsDaoClass... 
 Flight::register('student_service', "StudentService");
 Flight::register('course_service', "CourseService");
+Flight::register('user_dao', "UserDao");
 
 require_once('routes/StudentRoutes.php');
 require_once('routes/CourseRoutes.php');
+require_once('routes/UserRoutes.php');
 /*
 Flight::route("/", function(){
    echo "Hello from / route";
