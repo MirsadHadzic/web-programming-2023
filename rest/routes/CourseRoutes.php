@@ -1,6 +1,6 @@
 <?php
-
-Flight::route("GET /students", function(){
+use OpenApi\Annotations as OA;
+/*Flight::route("GET /students", function(){
     Flight::json(Flight::course_dao()->get_all());
  });
  
@@ -37,6 +37,6 @@ Flight::route("GET /students", function(){
  
  Flight::route("GET /students/@name/@status", function($name, $status){
     echo "Hello from /students route with name = " . $name . " and status = " . $status;
- });
+ });*/
 
 ?>

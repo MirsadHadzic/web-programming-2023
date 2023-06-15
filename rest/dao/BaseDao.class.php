@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__."/../Config.class.php";
  class BaseDao {
-    private $conn; 
+    private $conn;
 
     private $table_name;
 
@@ -14,7 +14,7 @@ require_once __DIR__."/../Config.class.php";
           $servername = Config::DB_HOST();
           $username = Config::DB_USERNAME();
           $password = Config::DB_PASSWORD();
-          $schema = Config::DB_SCHEMA();;
+          $schema = Config::DB_SCHEMA();
           $this->conn = new PDO("mysql:host=$servername;dbname=$schema", $username, $password);
           // set the PDO error mode to exception
           $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -39,7 +39,6 @@ require_once __DIR__."/../Config.class.php";
     public function get_by_id($id){
         $stmt = $this->conn->prepare("SELECT * FROM " . $this->table_name . " WHERE id=:id");
         $stmt->execute(['id' => $id]);
-        // stavio fetch, bilo fetchAll
         return $stmt->fetch();
     }
 
@@ -59,14 +58,14 @@ require_once __DIR__."/../Config.class.php";
         }
         $query = substr($query, 0, -2);
         $query.= ")";
-        
+
         $stmt = $this->conn->prepare($query);
         $stmt->execute($entity);
         $entity['id'] = $this->conn->lastInsertId();
         return $entity;
     }
 
-    
+
     /**
     * Method used to update entity in database
     */
@@ -93,12 +92,27 @@ require_once __DIR__."/../Config.class.php";
         $stmt->execute();
     }
 
-    protected function query($query, $params){
-        $stmt = $this->conn->prepare($query);
-        $stmt->execute($params);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-      }
 
+    /**
+    * Method used to delete entity from database
+    */
+    protected function delete_query($user_id, $id){
+        $stmt = $this->conn->prepare("DELETE FROM " . $this->table_name . " WHERE id = :id AND user_id = :user_id");
+        $stmt->bindParam(':id', $id); #prevent SQL injection
+        $stmt->bindParam(':user_id', $user_id); #prevent SQL injection
+        $stmt->execute();
+    }
+
+    protected function query($query, $params){
+      $stmt = $this->conn->prepare($query);
+      $stmt->execute($params);
+      return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    protected function query_unique($query, $params){
+      $results = $this->query($query, $params);
+      return reset($results);
+    }
  }
 
 ?>
